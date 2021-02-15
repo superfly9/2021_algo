@@ -1,3 +1,6 @@
+const progresses = [93,30,55];
+const speeds = [1,30,5]
+
 function solution(progresses, speeds) {
     let end_days = progresses.map((v,i)=> Math.ceil((100-v)/speeds[i]));
     let result = [0];
@@ -14,6 +17,5 @@ function solution(progresses, speeds) {
     }
     return result;
 }
-const progresses = [93,30,55];
-const speeds = [1,30,5]
+
 console.log(solution(progresses,speeds))
