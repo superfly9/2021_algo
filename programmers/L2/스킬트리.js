@@ -30,4 +30,30 @@ function solution (skill,skill_trees) {
 }
 const skill = 'CBD';
 const skill_trees =["BACDE", "CBADF", "AECB", "BDA"]
-console.log(solution(skill,skill_trees))
+
+// sol2
+function solution2(skill, skill_trees) {
+    var answer = 0;
+    var regex = new RegExp(`[^${skill}]`, 'g');
+
+    return skill_trees
+        .map((x) => x.replace(regex, ''))
+        .filter((x) => {
+            return skill.indexOf(x) === 0 || x === "";
+        }).length
+}
+// sol3
+function solution3(skill, skill_trees) {
+    function isCorrect(n) {
+        // const test = '[' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(v => !skill.includes(v)).join('') + ']*';
+        let test = skill.split('');
+        for (var i = 0; i < n.length; i++) {
+            if (!skill.includes(n[i])) continue;
+            if (n[i] === test.shift()) continue;
+            return false;
+        }
+        return true;
+    }    
+
+    return skill_trees.filter(isCorrect).length;
+}
