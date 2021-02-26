@@ -18,8 +18,20 @@ function dfs () {
     
 }
 function solution(numbers, target) {
-    var answer = 0;
+    let answer = 0;
+    //index => stage라 생각하고 풀이, 가장 나중 단계의 것이 먼저 return을 만나 사라지기에 스택 구조
+    dfs(0,0);
 
+    function dfs (index,sum) {
+        if (index === numbers.length) {
+            if (sum === target) {
+                answer++
+            }
+        return;
+        }
+        dfs(index+1,sum+numbers[index])
+        dfs(index+1,sum-numbers[index])
+    }
     return answer;
 }
 
