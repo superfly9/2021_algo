@@ -21,4 +21,19 @@ function solution(clothes) {
     return answer-1;
 }
 
-console.log(solution(clothes));
+function sol2(clothes) {
+    let answer = 1;
+    const candidate  = {};
+    for (let item of clothes) {
+        const key = item[1] // 'headgear' , 'eyewear'
+        candidate[key] = (candidate[key] || 1) + 1;
+    }
+    for (let key in candidate) {
+        console.log(candidate)
+        answer*= candidate[key]
+    }
+    return answer-1;
+}
+
+// solution이 훨씬 빠르네...왜지
+console.log(sol2(clothes));
