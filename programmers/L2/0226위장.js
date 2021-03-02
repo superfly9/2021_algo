@@ -3,7 +3,7 @@ const clothes =[['yellow_hat', 'headgear'], ['blue_sunglasses', 'eyewear'], ['gr
 
 
 function solution(clothes) {
-    let answer = clothes.length; // 하나씩만 입을때를 초기값으로 줌
+    let answer =1; // 하나씩만 입을때를 초기값으로 줌
     const candidate = {}
     // { 'headgear' : ['yellow_hat','blue_sunglasees'], 'eyewear : [] ] }형태의 구조를 생성
     for (let item of clothes) {
@@ -15,7 +15,10 @@ function solution(clothes) {
         const key = item[1];
         candidate[key].push(value)
     }
-    return answer;
+    for (let item in candidate) {
+        answer*= candidate[item].length+1;
+    }
+    return answer-1;
 }
 
-solution(clothes)
+console.log(solution(clothes));
