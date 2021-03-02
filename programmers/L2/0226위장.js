@@ -34,6 +34,3 @@ function sol2(clothes) {
     }
     return answer-1;
 }
-
-// solution이 훨씬 빠르네...왜지
-console.log(sol2(clothes));
