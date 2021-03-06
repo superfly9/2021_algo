@@ -5,6 +5,8 @@
 function solution(brown, yellow) {
     const totalBlock = brown + yellow;
     for (let i = yellow;i>0;i--) {
+        // yellow부터 시작해서 값을 1씩 줄이기에 항상 col > row인 값이 먼저 return
+        // for (let i = 0;i<yellow;i++) 였다면 내가 col < row인 값이 먼저 return되었을것
         if (yellow%i!==0) continue; //yellow의 약수가 아니면 다음 for문 loop실행
             const col = i +2;
             const row =(yellow/i)+2;
@@ -14,7 +16,6 @@ function solution(brown, yellow) {
 
 console.log(solution(10,2))
 
-
 // * => brown  
 // ********
 // *      *
@@ -23,3 +24,26 @@ console.log(solution(10,2))
 // *      *
 // ********
 
+function solution2(brown, red) {
+    var n = 0;
+    for(var m = red; m >= 1; m--){
+        n = Math.floor(red / m);
+        if(red % m == 0 && ((m + 2) * (n + 2) == (brown + red)))
+            return [m + 2, n + 2]
+    }
+}
+//다른 사람 풀이
+function solution3(brown, red) {
+    const totalSpace = brown + red;
+    
+    for(let i = Math.floor(totalSpace / 2); i > 0; i--){
+        if(totalSpace % i !== 0) continue;
+        
+        const width = i;
+        const height = totalSpace / i;
+        
+        if((width - 2) * (height - 2) === red){
+            return [width, height];
+        }
+    }
+}
