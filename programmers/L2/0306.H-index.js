@@ -22,3 +22,15 @@ function solution(citations) {
     }
 }
 console.log(solution([3,0,6,1,5]))
+
+
+//sol2
+
+function solution(citations) {
+     citations = citations.sort((a,b)=>b-a);
+     var i = 0;
+     while(i + 1 <= citations[i]){
+         i++;
+     }
+     return i;
+}
