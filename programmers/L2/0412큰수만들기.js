@@ -4,18 +4,19 @@
  // 1,2,3
 
 
-// 
-function solution(number, k) {
+ function solution(number, k) {
     let collected  = [];
-    // 모든 경우를 다 순회? 그리디면 그럴 필요 없나 ? 헷갈린다
     for (let i=0;i<number.length;i++) {
         while (k>0) {
             if (collected[collected.length-1] < number[i]) {
                 collected.pop();
                 k-=1;
-            }
-            collected.push(number[i])
+                collected.push(number[i])
+            }  else {
+                break;
+            }           
         }
+        
     }
     return collected.join('').substr(0,number.length-k);
 }
