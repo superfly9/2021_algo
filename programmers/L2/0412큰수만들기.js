@@ -11,12 +11,13 @@
             if (collected[collected.length-1] < number[i]) {
                 collected.pop();
                 k-=1;
-                collected.push(number[i])
             }  else {
                 break;
             }           
         }
-        
+        collected.push(number[i])
     }
+    // console.log('collected:',collected,'index:',(number.length-k),'??',k)
     return collected.join('').substr(0,number.length-k);
 }
+// console.log(solution('1231234',3))
