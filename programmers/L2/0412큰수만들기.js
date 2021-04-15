@@ -19,5 +19,7 @@
     }
     // console.log('collected:',collected,'index:',(number.length-k),'??',k)
     return collected.join('').substr(0,number.length-k);
+    // substr(0) or substr(number.length)만 하면 k!==0경우에서 통과못함
+    // k!==0인 경우 잘보기
 }
 // console.log(solution('1231234',3))
