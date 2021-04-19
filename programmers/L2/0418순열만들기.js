@@ -16,7 +16,6 @@ const per =() =>{
 const permutation = (arr, depth, r)=> { 
         if (depth == r) {
             for (let i = 0; i < r; i++) {
-                // System.out.print(chars[i] + "\t");
                 console.log('Complete:',arr,'arr[i]:',arr[i])
             }
             return;
@@ -38,3 +37,25 @@ const permutation = (arr, depth, r)=> {
         }
     }
     console.log(per())
+
+
+    //refactoring )
+    const swap=(arr,  i,  j) => { 
+        const temp = arr[i]; 
+        arr[i] = arr[j]; 
+        arr[j] = temp; 
+    } 
+    const perm  = (arr, depth,  n,  k) =>{ 
+        if (depth == k) { // 한번 depth 가 k로 도달하면 사이클이 돌았음. 출력함. 
+            for (let i = 0; i < r; i++) {
+                console.log('Complete:',arr,'arr[i]:',arr[i])
+            }
+             return; 
+        } for ( i = depth; i < n; i++) { 
+            swap(arr, i, depth); 
+            perm(arr, depth + 1, n, k); 
+            swap(arr, i, depth); 
+        } 
+    } // 
+
+//출처: https://gorakgarak.tistory.com/522 
