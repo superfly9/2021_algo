@@ -8,6 +8,8 @@
 function solution(s){
     const arr = s.split('');
     let count  = 0;
+    //문자열 순회 -> '('이면 count 증가, ')'이면 감소.  count  < 0 라는 건 ')'가 먼저 나오거나 '('보다 갯수가 많은 것이므로 false 
+    //그런 식으로 끝까지 순회 + ()의 갯수가 같아야하므로 count === 0이면 return true
     for (let value of arr) {
         if (value ==='(') {
             count++;
@@ -18,3 +20,9 @@ function solution(s){
     }
     return count === 0 ? true : false;
 }
+
+//sol2
+function is_pair(s){
+    var result = s.match(/(\(|\))/g);
+    return result[0] == '(' && result.length % 2 == 0 ? true : false
+  }
