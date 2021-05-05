@@ -62,9 +62,7 @@ function solution(record) {
                 action.push(id)
         }
     }
-    console.log('Info:',info,'Action:',action)
     for (let id of action) {
-        console.log(id)
         const behavior = info[id]['behavior'].shift() === 'Enter' ? '들어왔습니다' : '나갔습니다'
         const msg = `${info[id]['nickName']}님이 ${behavior}.`
         //"Prodo님이 들어왔습니다."
@@ -79,4 +77,31 @@ function solution(record) {
     return answer;
 }
 
-console.log(solution(record))
+
+// sol2
+function solution2(record) {
+    // 여기에서는 하나의 객체가 하나의 역할(nickname만,행동만,메시지만)을 담당하고 있다
+    const userInfo = {}; // id + nickname만 담음
+    const action = []; //  id + 행동을 담음
+    const stateMapping = { // 행동에 대한 메시지
+        'Enter': '님이 들어왔습니다.',
+        'Leave': '님이 나갔습니다.'
+    }
+
+    record.forEach((v) => {
+        const [state, id, nick] = v.split(' ');
+
+        if(state !== "Change") {
+            action.push([state, id]); // [ ['Enter','uid1234'] , ['Enter','uid4567']....]
+        }
+
+        if(nick) {
+            userInfo[id] = nick;
+        }
+    })
+    console.log('Sol2 Action:',action);
+    return action.map(([state, uid]) => {
+        return `${userInfo[uid]}${stateMapping[state]}`;    
+    })
+}
+console.log(solution2(record))
