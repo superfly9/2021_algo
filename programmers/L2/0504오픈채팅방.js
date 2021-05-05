@@ -19,28 +19,26 @@
 // result = ["Prodo님이 들어왔습니다.", "Ryan님이 들어왔습니다.", "Prodo님이 나갔습니다.", "Prodo님이 들어왔습니다."]
 // record순회 ->uid값 - 객체로 매칭(한 아이디에 대한 여러 정보를 담아야하기에) - Enter / Leave /Change에 따라 값을 처리
 
+// 처음 한 생각
 //  uid1234 : {
 //     'Enter' : ['Muzi','Prodo']
 //     'Leave' : null,
 //      'Change': ['Con']
 // }
 
-
-//10:30 - 11:00
 const record =["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"];
 function solution(record) {
     var answer = [];
+    let action = []
     let info = {}
     // 정보를 분리해서 처리 -> 행동 / 닉네임  : 마지막 change or enter의 값만 필요
-    // 행동은 매순간 모든 원소에 대해 처리, 닉네임은 마지막 것만 처리 따라서 둘의 정보를 분리
     // Enter,Change + uid,닉네임  || Leave : uid
     // Change : 출력을 따로 해줄 필요는 없다.
+    // 나중에 한 생각
     // uid123 : {
     //     nickName : 'Muzi'
     //     behavior : ['Enter','Leave','Change']
     // }
-
-    
     for (let value of record) {
         const [behavior,id,nickName] = value.split(' ');
         //id에 해당하는 객체 없을 때 객체 생성
@@ -54,15 +52,26 @@ function solution(record) {
             case 'Enter':
                 info[id]['nickName'] = nickName;
                 info[id]['behavior'] = [...info[id]['behavior'],behavior] 
+                action.push(id)
                 break;
             case 'Change':
                 info[id]['nickName'] = nickName
                 break;
             case 'Leave':
                 info[id]['behavior'] = [...info[id]['behavior'],behavior] 
+                action.push(id)
         }
     }
-    console.log('Info:',info)
+    console.log('Info:',info,'Action:',action)
+    for (let id of action) {
+        console.log(id)
+        const behavior = info[id]['behavior'].shift() === 'Enter' ? '들어왔습니다' : '나갔습니다'
+        const msg = `${info[id]['nickName']}님이 ${behavior}.`
+        //"Prodo님이 들어왔습니다."
+        answer.push(msg)
+    }
+    // change아닌것만 Aciotn에 담기
+    // Action  = [1234,4567, 1234,1234... ] => Info[nickName], behavior.
     // Info: {
     //     uid1234: { nickName: 'Prodo', behavior: [ 'Enter', 'Leave', 'Enter' ] },
     //     uid4567: { nickName: 'Ryan', behavior: [ 'Enter' ] }
@@ -70,4 +79,4 @@ function solution(record) {
     return answer;
 }
 
-solution(record)
+console.log(solution(record))
