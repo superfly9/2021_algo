@@ -22,24 +22,52 @@
 //  uid1234 : {
 //     'Enter' : ['Muzi','Prodo']
 //     'Leave' : null,
+//      'Change': ['Con']
 // }
+
+
+//10:30 - 11:00
+const record =["Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"];
 function solution(record) {
     var answer = [];
     let info = {}
-    for (let value in record) {
+    // 정보를 분리해서 처리 -> 행동 / 닉네임  : 마지막 change or enter의 값만 필요
+    // 행동은 매순간 모든 원소에 대해 처리, 닉네임은 마지막 것만 처리 따라서 둘의 정보를 분리
+    // Enter,Change + uid,닉네임  || Leave : uid
+    // Change : 출력을 따로 해줄 필요는 없다.
+    // uid123 : {
+    //     nickName : 'Muzi'
+    //     behavior : ['Enter','Leave','Change']
+    // }
+
+    
+    for (let value of record) {
         const [behavior,id,nickName] = value.split(' ');
-        if (info[id] === undefined) {
-            info[id] = {};
-            
+        //id에 해당하는 객체 없을 때 객체 생성
+        if (!info[id]) {
+            info[id] = {
+                nickName : '',
+                behavior :[]
+            }
         }
         switch (behavior) {
             case 'Enter':
-                info[id][behavior] 
+                info[id]['nickName'] = nickName;
+                info[id]['behavior'] = [...info[id]['behavior'],behavior] 
                 break;
             case 'Change':
+                info[id]['nickName'] = nickName
                 break;
             case 'Leave':
+                info[id]['behavior'] = [...info[id]['behavior'],behavior] 
         }
     }
+    console.log('Info:',info)
+    // Info: {
+    //     uid1234: { nickName: 'Prodo', behavior: [ 'Enter', 'Leave', 'Enter' ] },
+    //     uid4567: { nickName: 'Ryan', behavior: [ 'Enter' ] }
+    //   }
     return answer;
 }
+
+solution(record)
