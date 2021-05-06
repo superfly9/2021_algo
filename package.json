@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/superfly9/2021_algo/issues"
   },
-  "homepage": "https://github.com/superfly9/2021_algo#readme"
+  "homepage": "https://github.com/superfly9/2021_algo#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }

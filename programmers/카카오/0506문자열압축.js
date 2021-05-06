@@ -35,12 +35,13 @@ const s3 = 'aaabbbb' // 3a3bb
 // 1.완전탐색 -> 모든 문자열 조합에 대해 길이를 조사, 조합된 문자열 길이 <= s.length / 2일때까지 (잘린 문자열 길이 > s.length/2이면 같은 문자의 반복이 안 일어나므로 )
 // 2.자른 문자열에 대해, 그 다음 index부터 문자열을 하나씩 잘라가기
 function solution(s) {
-    //aabbaccc
+    //aabbaccc => 2a2ba3c
     var answer = [];
     for (let i=1;i<s.length/2;i++) {
         // i는 문자열을 자를 갯수를 의미
         let str1 = s.substring(0,i); //  1. 길이를 1씩 늘려가며 자르는 문자열 (그 뒤의 문자열과 비교하는 기준이 된다)
         let str2 = ''
+        let result = ''
         let count = 1; // str1이 몇 번 반복되는지를 나타내는 숫자(문자를 자를때마다 1로 초기화)
         for (let j=i;j<s.length-i+1;j+=i) {
             // j + i < s.length
@@ -53,10 +54,14 @@ function solution(s) {
             if (str1 === str2) {
                 count++;
             } else {
+                //비교하는 문자열이 다를때 카운트와 문자열을 추가
+                result+=count >1 ? `${count}${str2}` : `${str2}`
                 str1 = str2;
+                count = 1;
             }
-            answer.push(count >1 ? `${count}${str2}` : `${str1}`)
         }
+        if (count>1) result +=`${count}${str2}`
+        answer.push(result)
     }
     return answer;
 }
