@@ -72,6 +72,7 @@ function solution(s) {
                 result += str2
                 // if (s1.len)
                 str1 = str2;
+                count = 1;
             }
         }
         answer.push(result);
