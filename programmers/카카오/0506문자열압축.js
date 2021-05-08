@@ -35,30 +35,49 @@ const s3 = 'aaabbbb' // 3a3bb
 // 1.완전탐색 -> 모든 문자열 조합에 대해 길이를 조사, 조합된 문자열 길이 <= s.length / 2일때까지 (잘린 문자열 길이 > s.length/2이면 같은 문자의 반복이 안 일어나므로 )
 // 2.자른 문자열에 대해, 그 다음 index부터 문자열을 하나씩 잘라가기
 function solution(s) {
-    //aabbaccc
+    //aabbaccc => 2a2ba3c (1개 단위로 자를때)
+    // 2a2bac2c
     var answer = [];
     for (let i=1;i<s.length/2;i++) {
         // i는 문자열을 자를 갯수를 의미
         let str1 = s.substring(0,i); //  1. 길이를 1씩 늘려가며 자르는 문자열 (그 뒤의 문자열과 비교하는 기준이 된다)
         let str2 = ''
+        let result = ''
         let count = 1; // str1이 몇 번 반복되는지를 나타내는 숫자(문자를 자를때마다 1로 초기화)
-        for (let j=i;j<s.length-i+1;j+=i) {
+        for (let j=i;j<=s.length;j+=i) {
+            // s1 = a , s2 =a 
             // j + i < s.length
             // i = 3 이면 0~2번째 문자를 자름, 그 다음에는 3~5번째 문자를 자름
              str2 = s.substring(j,j+i);
              // i=2 , 
              // j =2 , j =4 , j= 6
-              
+             //aabbaccc 
+              // s1 = aa ,s2 = bb  s1!==s2 =>  aabbaccc
+              // s1 = bb
+              //abcabcdede => 3개씩 : 2abcdede , dede를 3개씩 자르고 남은 e는 그냥 붙여준다
+              // s1  = abc s2 = abc  s1 == s2  => count++  str += 2abc  안쪽 for문  index = 3
+              //  s1 = abc s2 = ded   s1 !== s2 => count = 1, 남은 것 e (index = 9 ) str+='ded' index = 6  
+              // s1 = e s2 = '' =>  s1 !==s2 => count =1 , str+='e'  index = 9  s1.length < i 이면 종료
+            //   if (str1.length < i) {
+            //       result += str1;
+            //       continue;
+            //   }
              console.log('str1:',str1,'str2:',str2)
             if (str1 === str2) {
                 count++;
+                result += `${count}${str2}`;
+                
             } else {
+                count = 1;
+                result += str2
+                // if (s1.len)
                 str1 = str2;
             }
-            answer.push(count >1 ? `${count}${str2}` : `${str1}`)
         }
+        answer.push(result);
     }
-    return answer;
+    // return Math.min(...answer);
+    return answer
 }
 
 console.log(solution(s0))
