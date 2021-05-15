@@ -28,8 +28,8 @@
 // 같은 원소가 있다면 해당 원소 삭제후, 맨 뒤에 push + count 증가
 // 없다면 가장 앞에 것 제거(shift) + 새로운 원소를 배열의 가장 뒤로 push
 // cacheSize = 0 인 것도 처리해야
-//Test 7,17 실패
 function solution (cacheSize,cities) {
+    //Test 7,17 실패 => cacheSize =  0일때 처리가 안되서 그랬던 것, 그래서 33Line추가했더니 통과
     if (cacheSize === 0) return cities.length * 5
     let timeCount = 0;
     // 도시들을 담을 배열 생성
@@ -59,3 +59,32 @@ let s2 = ["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco","Seoul", "R
 let s3 = ["Jeju", "Pangyo", "Seoul", "NewYork", "LA"];
 let s4  =["Jeju", "Pangyo", "NewYork", "newyork"]
 console.log(solution(0,s3));
+
+
+//sol2)
+function solution(cacheSize, cities) {
+    const MISS = 5, HIT = 1;
+
+    if (cacheSize === 0) return MISS * cities.length;
+
+    let answer = 0,
+        cache = [];
+
+    cities.forEach(city => {
+        city = city.toUpperCase();
+
+        let idx = cache.indexOf(city);
+
+        if (idx > -1) {
+            cache.splice(idx, 1);
+            answer += HIT;
+        } else {
+            if (cache.length >= cacheSize) cache.shift();
+            answer += MISS;
+        }
+
+        cache.push(city);
+    });
+
+    return answer;
+}
