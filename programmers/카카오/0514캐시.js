@@ -88,3 +88,107 @@ function solution(cacheSize, cities) {
 
     return answer;
 }
+
+// 클래스 쓴 것 보고 신기해서..
+
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+function solution(cacheSize, cities) {
+    let downCities = cities.map(city => city.toLowerCase());
+
+    class Cache {
+        constructor (size) {
+            this.cache = {};
+            this.cacheLength = 0;
+            this.cursor = 0;
+            this.olds = [];
+            this.cacheSize = size;
+        }
+
+        push (value) {
+            if (this.cacheSize === 0) {
+                return 5;
+            }
+
+            if (this.cache[value] === undefined) {
+                this.cache[value] = true;
+
+                if (this.cacheLength === this.cacheSize) {
+                    let toRemove = this.olds.shift();
+
+                    this.cache[toRemove] = undefined;
+
+                } else {
+                    this.cacheLength++;
+                }
+
+                this.olds.push(value);
+
+                return 5;
+
+            } else {
+                this.olds = this.olds.filter(old => old !== value);
+
+                this.olds.push(value);
+
+                return 1;
+            }
+        }
+    }
+
+    let cache = new Cache(cacheSize);
+
+    let result = downCities.reduce((sum, city) => {
+        return sum + cache.push(city);
+    }, 0);
+
+    return result;
+}
