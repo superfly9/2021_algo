@@ -9,6 +9,7 @@
 // "FRANCE"와 "FRENCH"가 주어졌을 때, 이를 두 글자씩 끊어서 다중집합을 만들 수 있다. 
 //각각 {FR, RA, AN, NC, CE}, {FR, RE, EN, NC, CH}가 되며, 
 //교집합은 {FR, NC}, 합집합은 {FR, RA, AN, NC, CE, RE, EN, CH}가 되므로, 두 문자열 사이의 자카드 유사도 J("FRANCE", "FRENCH") = 2/8 = 0.25가 된다.
+//L2: 38문제  L3 :44문제 , L4:20문제
 let str1 = "E=M*C^2";
 let str2 = "e=m*c^2"
 let s1 = 'aaaabbac'
