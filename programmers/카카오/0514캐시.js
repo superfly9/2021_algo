@@ -1,3 +1,5 @@
+// L2 :35개남음
+// L3 :84 , L4 :40
 // 캐시 크기(cacheSize)와 도시이름 배열(cities)을 입력받는다.
 // cacheSize는 정수이며, 범위는 0 ≦ cacheSize ≦ 30 이다.
 
@@ -91,56 +93,6 @@ function solution(cacheSize, cities) {
 
 // 클래스 쓴 것 보고 신기해서..
 
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
 function solution(cacheSize, cities) {
     let downCities = cities.map(city => city.toLowerCase());
 
@@ -148,7 +100,6 @@ function solution(cacheSize, cities) {
         constructor (size) {
             this.cache = {};
             this.cacheLength = 0;
-            this.cursor = 0;
             this.olds = [];
             this.cacheSize = size;
         }
@@ -160,7 +111,7 @@ function solution(cacheSize, cities) {
 
             if (this.cache[value] === undefined) {
                 this.cache[value] = true;
-
+                //  { 'jeju' : true } 
                 if (this.cacheLength === this.cacheSize) {
                     let toRemove = this.olds.shift();
 
