@@ -84,3 +84,268 @@ const checkRight = (str)=>{
 
 let str1 = '()))((()'
 console.log('답:',solution(str1));
+
+
+//sol2
+
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+function solution(p) {
+  if (p.length === 0) {
+    return ''
+  }
+  const { u, v } = split(p)
+
+  if (isValid(u)) {
+    return u + solution(v)
+  } else {
+    return '(' + solution(v) + ')' + makeNewU(u)
+  }
+}
+
+const isValid = (str) => {
+  const stack = []
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i]
+    if (char === '(') {
+      stack.push(char)
+    } else {
+      stack.pop()
+    }
+  }
+  return stack.length === 0
+}
+
+const split = (p) => {
+  let count = 0
+  for (let idx = 0; idx < p.length; idx++) {
+    const char = p[idx]
+    if (char === '(') {
+      count++
+    } else {
+      count--
+    }
+    if (count === 0) {
+      return { u: p.slice(0, idx + 1), v: p.slice(idx + 1) }
+    }
+  }
+}
+
+const makeNewU = (u) => {
+  const result = Array.from(u.slice(1, u.length - 1))
+    .map((char) => {
+      if (char === '(') {
+        return ')'
+      } else {
+        return '('
+      }
+    })
+    .join('')
+  return result
+}
+
+///
+const TYPE1 = '\('
+const TYPE2 = '\)'
+function solution(p) {
+    let result = convert(p,'');
+    return result;
+}
+function convert(w,ans){
+    // 문자열을 균형잡힌 괄호 문자열 u,v로 분리
+    // u는 더 나눌 수 없는 균형잡힌 괄호 문자열
+    let str = divide(w);
+    let u = str[0];
+    let v = str[1];
+    if (check(u)){
+        // u가 올바른 문자열이라면 ans에 u를 붙이고 v부터 다시 시작
+        // v가 비어있다면 그동안 붙인 ans 반환
+        ans += u;
+        if (v===''){
+            return ans;
+        }
+        return convert(v,ans);
+    }else{
+        // u가 올바른 문자열이 아니라면 과정 수행하고 반환
+        ans += '\(' + convert(v,'') +'\)' + transfromU(u);
+        return ans;
+    }
+}
+function transfromU(u){
+    let newU = ''
+    for (let i=1; i<u.length-1; i++){
+        if(u[i]===TYPE1){
+            newU += TYPE2;
+        }else{
+            newU += TYPE1;
+        }
+    }
+    return newU;
+}
+function check(str){
+    // 문자열 넘기면서 TYPE1 문자열 개수보다 TYPE2 문자열 개수가 많아지면 올바른 문자열이 아님
+    let isCorrect = true;
+    let cntType1 = 0;
+    let cntType2 = 0;
+    for (let i=0; i<str.length; i++){
+        if (str[i] === TYPE1){
+            cntType1++;
+        }else if (str[i] === TYPE2){
+            cntType2++;
+        }
+        if (cntType1 < cntType2){
+            isCorrect = false;
+        }
+    }
+    return isCorrect;
+}
+function divide(str){
+    // 문자열 넘기면서 처음으로 TYPE1 문자열 개수와 TYPE2 문자열 개수가 같아지면
+    // 그동안 넘긴 문자열과 그 이후로 나누기
+    let cntType1 = 0;
+    let cntType2 = 0;
+    let i = 0;
+    for (i=0; i<str.length; i++){
+        if (str[i] === TYPE1){
+            cntType1++;
+        }else if (str[i] === TYPE2){
+            cntType2++;
+        }
+        if (cntType1 === cntType2){
+            break;
+        }
+    }
+    let arr = [];
+    arr.push(str.substr(0,i+1));
+    arr.push(str.substr(i+1,str.length-i));
+    return arr;
+}
+
+//function solution(p){
+    if(p=='') return '';
+    var answer = solution_act(p);
+    
+    function solution_act(str){
+        var txt = '';
+        var num = 0;
+        for(var i=0; i<str.length; i++){
+            num += (str[i] == '(') ? 1 : -1;
+            if(num == 0) break;
+        }
+        var u = str.substring(0,i+1);
+        var v = str.substring(i+1,str.length);
+        if(check_correct_str(u)){
+            txt += u;
+            if(v != '') txt += solution_act(v);
+        }else{
+            txt += '(';
+            txt += solution_act(v);//( 
+            txt += ')';
+            u = u.substring(1, u.length-1);
+            for(var j=0; j<u.length; j++){
+                txt += (u[j] == ')') ? '(' : ')';
+            }
+        }
+        return txt;
+    }
+    
+
+    // 올바른 문자열 체크
+    function check_correct_str(str){
+        var num = 0;
+        for(var i=0; i<str.length; i++){
+            num += (str[i] == '(') ? 1 : -1;
+            if(num < 0) break;
+        }
+        return (num == 0) ? true : false;
+    }
+    return answer;
+}
+//
+
+
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+function reverse(str) {
+  return str.slice(1, str.length - 1).split("").map((c) => (c === "(" ? ")" : "(")).join("");
+}
+
+function solution(p) {
+  if (p.length < 1) return "";
+
+  let balance = 0;
+  let pivot = 0;
+  do { balance += p[pivot++] === "(" ? 1 : -1 } while (balance !== 0);
+
+  const u = p.slice(0, pivot);
+  const v = solution(p.slice(pivot, p.length));
+
+  if (u[0] === "(" && u[u.length - 1] == ")") return u + v;
+  else return "(" + v + ")" + reverse(u);
+}
