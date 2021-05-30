@@ -33,13 +33,14 @@ let arr1 =
 //   [9,10] 
 // ]
 // [
-//     [1,2,3,4,5] j=0,k=0,j=1,k=0
+//     [1,2,3,4,5] k=0,j=0,k=1,j=0 => j고정 시키고 k가 변해야
 //     [3,5,3,8,9]
 // ]
 function solution(arr1, arr2) {
     let result = [];
     for (let i = 0;i<arr1.length;i++) {
         result.push([]);
+        // j고정 + k를 하나씩 증가
         for (let j = 0;j<arr2[0].length;j++) {
             let sum = 0;
             for (let k=0;k<arr2.length;k++) {
