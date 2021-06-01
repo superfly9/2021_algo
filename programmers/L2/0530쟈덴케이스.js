@@ -21,3 +21,20 @@ let str1 = "3people unFollowed me",
         }).join(' ')
     }
     
+// sol2 
+function solution2(s) {
+    return s.split(" ").map(v => v.charAt(0).toUpperCase() + v.substring(1).toLowerCase()).join(" ");
+}
+
+
+//sol3
+function solution3(s) {
+    var answer = [];
+
+    s = s.split(' ');
+    for(var i=0; i<s.length; i++) {
+        // 2번쨰문자부터는 그냥 소문자로 다 처리해도 문제의 조건 만족하기에
+        answer.push(s[i].substr(0,1).toUpperCase() + s[i].substr(1,s[i].length).toLowerCase());
+    }
+    return answer.join(' ');
+}
