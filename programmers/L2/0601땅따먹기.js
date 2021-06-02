@@ -1,6 +1,5 @@
 //              land	            answer
 // [[1,2,3,5],[5,6,7,8],[4,3,2,1]]	  16
-// [[1,2,3,4] [5,6,7,9] [4,3,4,6]]
 // 단, 땅따먹기 게임에는 한 행씩 내려올 때, 같은 열을 연속해서 밟을 수 없는 특수 규칙이 있습니다.
 // 예를 들면,
 // | 1 | 2 | 3 | 5 |    
@@ -14,16 +13,15 @@
 // 땅 -> N행 4열로
 // 완전 탐색 or 그리디인줄 알았는데 dp
 function solution(land) {
-    let arr = [];
-    for (let i = 0;i<land.length;i++) {
-        arr.push([0,0,0,0]);
-    }
+    
     for (let i=1;i<land.length;i++) {
-        arr[i][0] += Math.max(land[i-1][1],land[i-1][2],land[i-1][3]) + land[i-1][0]
-        arr[i][1] += Math.max(land[i-1][0],land[i-1][2],land[i-1][3]) + land[i-1][1]
-        arr[i][2] += Math.max(land[i-1][0],land[i-1][1],land[i-1][3]) + land[i-1][2]
-        arr[i][3] += Math.max(land[i-1][0],land[i-1][1],land[i-1][2]) + land[i-1][3]
+        land[i][0] += Math.max(land[i-1][1],land[i-1][2],land[i-1][3])
+        land[i][1] += Math.max(land[i-1][0],land[i-1][2],land[i-1][3])
+        land[i][2] += Math.max(land[i-1][0],land[i-1][1],land[i-1][3])
+        land[i][3] += Math.max(land[i-1][0],land[i-1][1],land[i-1][2])
     }
-    console.log(arr)
-    return Math.max(...arr[land.length-1]);
+    return Math.max(...land[land.length-1]);
 }
+
+let land =[[1,2,3,5],[5,6,7,8],[4,3,2,1]];
+console.log(solution(land))
