@@ -23,3 +23,17 @@ function solution(n) {
     console.log(arr)
     return arr[n]%remainder;
 }
+
+//sol2
+function fibonacci(n) {
+    var a = 0, b = 1, f = 1;
+    for (var i = 2; i <= n; i++) {
+      f = a + b;
+      a = b;
+      b = f;
+    }
+    return f;
+  }
+  
+  // 아래는 테스트로 출력해 보기 위한 코드입니다.
+  console.log(fibonacci(3))
