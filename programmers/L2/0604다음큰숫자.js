@@ -16,9 +16,7 @@ function solution(n) {
         flag = false,
         targetCount = countHandler(binaryNumber);
         while (!flag) {
-            let target =(++n).toString(2);
-            console.log('타겟:',target)
-            if(countHandler(target) === targetCount) {
+            if(countHandler((++n).toString(2)) === targetCount) {
                 flag = true;
             }
         }
@@ -35,3 +33,11 @@ function countHandler(binaryNumber) {
 }
 
 console.log(solution(78))
+
+// sol2)
+function nextBigNumber(n) {
+    var size = n.toString(2).match(/1/g).length
+    while(n++) {
+        if(size === n.toString(2).match(/1/g).length) return n
+    }
+}
