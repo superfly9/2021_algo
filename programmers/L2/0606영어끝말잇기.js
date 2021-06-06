@@ -62,10 +62,10 @@
 // 이전 단어의 마지막 글자 !== 현재 단어의 앞글자이면 break로 for문 종료,
 // 몇번째 사람이 어느턴에?  몇번째 턴(몫의 의미)-> Math.ceil((i+1)/n), 1번 사람이 3번째 턴에 탈락 :몇 번째사람(계속 같은게 반복되기에 나머지의 의미) ( i ===  4) => (i+1)%n,
 function solution(n, words) {
-  let answer = [],
+  let answer = [words[0]],
     flag = true,
     i = 0;
-  for (let i = 1; i < words.length; i++) {
+  for (i = 1; i < words.length; i++) {
     let prevWords = words[i - 1],
       currentWords = words[i],
       prevLastStr = prevWords[prevWords.length - 1],
@@ -81,7 +81,7 @@ function solution(n, words) {
     }
     answer.push(currentWords);
   }
-  return flag ? [0, 0] : [(i + 1) % n, Math.ceil((i + 1) / n)];
+  return flag ? [0, 0] : [(i % n) + 1, Math.ceil((i + 1) / n)];
 }
 let n = 3,
   words = [
