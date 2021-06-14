@@ -70,8 +70,6 @@ function solution(n, words) {
       currentWords = words[i],
       prevLastStr = prevWords[prevWords.length - 1],
       currentFirstStr = currentWords[0];
-    console.log("i:", i, prevWords, currentWords);
-    console.log("anwers:", answer);
     if (
       prevLastStr !== currentFirstStr ||
       answer.indexOf(currentWords) !== -1
@@ -97,3 +95,62 @@ let n = 3,
   ];
 console.log(solution(n, words));
 // [3,3]
+
+//sol2
+function solution(n, words) {
+  for (let i = 0; i < words.length; i++) {
+    if (i === 0) continue;
+    let prevWord = words[i - 1];
+    let prevLast = prevWord[prevWord.length - 1];
+    let currFirst = words[i][0];
+    if (words.indexOf(words[i]) !== i || prevLast !== currFirst) {
+      return [(i + 1) % n || n, Math.ceil((i + 1) / n)];
+    }
+  }
+  return [0, 0];
+  // [번호, 차례] (i+1)%n 이 번호를 표현, Math.ceil((i+1)/3)로 표현가능.
+  // words 에서 i = 0일 때 제외하고 i-1의 맨뒷글자와 i의 맨첫글자 비교.
+  // indexof로 찾는다.
+}
+//
+function solution(n, words) {
+  let answer = 0;
+  words.reduce((prev, now, idx) => {
+    answer =
+      answer ||
+      (words.slice(0, idx).indexOf(now) !== -1 || prev !== now[0]
+        ? idx
+        : answer);
+    return now[now.length - 1];
+  }, "");
+
+  return answer ? [(answer % n) + 1, Math.floor(answer / n) + 1] : [0, 0];
+}
+
+//sol3
+function solution(n, words) {
+  var fail_i = -1;
+  for (var i = 1; i < words.length; i++) {
+    var val = words[i];
+    // 전단계의 끝말과 현단계 첫말이 다를 경우
+    if (
+      words[i - 1].substring(words[i - 1].length - 1) != val.substring(0, 1)
+    ) {
+      fail_i = i;
+      break;
+    }
+    // indexOf 함수는 첫번째로 값이 맞는 인덱스만 반환하므로
+    // 현재 인덱스와 맞지 않을 경우 중복된 값
+    if (words.indexOf(val) != i) {
+      fail_i = i;
+      break;
+    }
+  }
+
+  if (fail_i == -1) return [0, 0];
+
+  var no = (fail_i % n) + 1;
+  var turn = Math.floor(fail_i / n) + 1;
+
+  return [no, turn];
+}
