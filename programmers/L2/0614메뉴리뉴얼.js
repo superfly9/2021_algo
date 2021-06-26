@@ -1,7 +1,3 @@
-// 레스토랑을 운영하던 스카피는 코로나19로 인한 불경기를 극복하고자 메뉴를 새로 구성하려고 고민하고 있습니다.
-// 기존에는 단품으로만 제공하던 메뉴를 조합해서 코스요리 형태로 재구성해서 새로운 메뉴를 제공하기로 결정했습니다. 어떤 단품메뉴들을 조합해서 코스요리 메뉴로 구성하면 좋을 지 고민하던 "스카피"는 이전에 각 손님들이 주문할 때 가장 많이 함께 주문한 단품메뉴들을 코스요리 메뉴로 구성하기로 했습니다.
-// 단, 코스요리 메뉴는 최소 2가지 이상의 단품메뉴로 구성하려고 합니다. 또한, 최소 2명 이상의 손님으로부터 주문된 단품메뉴 조합에 대해서만 코스요리 메뉴 후보에 포함하기로 했습니다.
-
 // 예를 들어, 손님 6명이 주문한 단품메뉴들의 조합이 다음과 같다면,
 // (각 손님은 단품메뉴를 2개 이상 주문해야 하며, 각 단품메뉴는 A ~ Z의 알파벳 대문자로 표기합니다.)
 
@@ -29,7 +25,26 @@ const orders = ["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"],
   course = [2, 3, 4];
 // course의 길이별로 가능한 조합을 다 만들고 , 그 조합에 대해 전체 순회하면서 카운트 세기
 function solution(orders, course) {
-  var answer = [];
+  const answer = [],
+    result = {};
+  orders.forEach((v) => {
+    for (let i = 0; i < course.length; i++) {
+      //getCombinations(v.split("") :Ex = [A,B,C,F,G] , 2 )  => AB AC AF AG BC BF BG
+      let candidate = getCombinations(v.split(""), course[i]);
+      for (let i = 0; i < candidate.length; i++) {
+        let key = candidate[i].join("");
+        // key가 이미 result obj에 존재하는지 확인 -> true : count + 1 , false : 1부터 시작
+        result[key] = result.hasOwnProperty(key) ? result[key] + 1 : 1;
+        // 모든 경우의 수를 객체로 만듦
+      }
+    }
+    // 객체를 순환하며 길이 별로 가장 크거나 긴 값을 체크
+    console.log("레절트:", result);
+    for (let key in result) {
+      if (result[key] == 1) continue;
+      key.length;
+    }
+  });
   return answer;
 }
 
@@ -47,6 +62,4 @@ const getCombinations = function (arr, selectNumber) {
   return results; // 결과 담긴 results return
 };
 
-const example = [1, 2, 3, 4];
-const result = getCombinations(example, 3);
-console.log(result);
+solution(orders, course);
