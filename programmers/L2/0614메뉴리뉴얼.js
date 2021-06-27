@@ -76,3 +76,96 @@ const getCombinations = function (arr, selectNumber) {
 };
 
 console.log(solution(orders, course));
+
+// sol2 )
+function looper(menu, max, startIndex = 0, cur = 0, str = "") {
+  if (menu.length < max) return [];
+  if (menu.length === max) return [menu];
+
+  let fullList = [];
+  if (max === cur + 1) {
+    let ans = [];
+    for (let j = startIndex; j < menu.length - max + 1 + cur; j++) {
+      ans.push(str + menu[j]);
+    }
+    return ans;
+  } else {
+    for (let i = startIndex; i < menu.length - max + 1 + cur; i++) {
+      fullList = fullList.concat(
+        looper(menu, max, i + 1, cur + 1, str + menu[i])
+      );
+    }
+  }
+
+  return fullList;
+}
+
+function solution(orders, course) {
+  let answer = [];
+  course.forEach((n) => {
+    var cands = {};
+    orders.forEach((order) => {
+      looper(order, n).forEach((candidateList) => {
+        let sortedText = candidateList.split("").sort().join("");
+        cands[sortedText] = ++cands[sortedText] || 1;
+      });
+    });
+
+    let biggest = 2, //ignore menus less than 2
+      list = [];
+
+    for (const prop in cands) {
+      if (cands[prop] > biggest) {
+        list = [prop];
+        biggest = cands[prop];
+      } else if (cands[prop] === biggest) {
+        list.push(prop);
+      }
+    }
+    answer = answer.concat(list);
+  });
+
+  return answer.sort();
+}
+
+//sol3
+function solution(orders, course) {
+  const result = [];
+  let total = new Map();
+
+  const pick = (begin, order, len, temp) => {
+    if (temp.length === len) {
+      const alpha = temp.slice(0).sort().join("");
+      total.set(alpha, total.get(alpha) + 1 || 1);
+      return;
+    }
+
+    for (let i = begin; i < order.length; i += 1) {
+      temp.push(order[i]);
+      pick(i + 1, order, len, temp);
+      temp.pop(order[i]);
+    }
+  };
+
+  for (let i = 0; i < course.length; i += 1) {
+    const len = course[i];
+    let max = 2,
+      temp = [];
+    total = new Map();
+
+    for (let i = 0; i < orders.length; i += 1) {
+      pick(0, orders[i], len, temp);
+    }
+
+    let strings = [];
+    for (const [alpha, count] of Array.from(total)) {
+      if (count < max) continue;
+      if (count > max) {
+        max = count;
+        strings = [alpha];
+      } else if (count === max) strings.push(alpha);
+    }
+    result.push(...strings);
+  }
+  return result.sort();
+}
