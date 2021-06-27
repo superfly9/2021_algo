@@ -21,16 +21,19 @@
 // ["ABCDE", "AB", "CD", "ADE", "XYZ", "XYZ", "ACD"]	[2,3,5]	["ACD", "AD", "ADE", "CD", "XYZ"]
 // ["XYZ", "XWY", "WXA"]	[2,3,4]	["WX", "XY"]
 
-const orders = ["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"],
+//BCF,BCG,CFG,BFG
+
+const orders = ["XYZ", "XWY", "WXA"],
   course = [2, 3, 4];
 // course의 길이별로 가능한 조합을 다 만들고 , 그 조합에 대해 전체 순회하면서 카운트 세기
 function solution(orders, course) {
-  const answer = [],
+  let answer = [],
     result = {};
   orders.forEach((v) => {
     for (let i = 0; i < course.length; i++) {
       //getCombinations(v.split("") :Ex = [A,B,C,F,G] , 2 )  => AB AC AF AG BC BF BG
-      let candidate = getCombinations(v.split(""), course[i]);
+      let candidate = getCombinations(v.split("").sort(), course[i]);
+      //v.split("")이면 wx ,xw가 각각 1번 씩으로 카운트 됨, 실제는 wx:2가 되어야함.따라서 조합을 만들기 전 오름차순으로 문자열 정리
       for (let i = 0; i < candidate.length; i++) {
         let key = candidate[i].join("");
         // key가 이미 result obj에 존재하는지 확인 -> true : count + 1 , false : 1부터 시작
@@ -38,14 +41,24 @@ function solution(orders, course) {
         // 모든 경우의 수를 객체로 만듦
       }
     }
-    // 객체를 순환하며 길이 별로 가장 크거나 긴 값을 체크
-    console.log("레절트:", result);
-    for (let key in result) {
-      if (result[key] == 1) continue;
-      key.length;
-    }
   });
-  return answer;
+  // 객체를 순환하며 길이 별로 가장 크거나 긴 값을 체크
+  for (let i = 0; i < course.length; i++) {
+    let max = 0, // course값이 달라질 때마다 초기화
+      val = [];
+    for (let key in result) {
+      if (course[i] !== key.length) continue;
+      if (result[key] > 1 && result[key] > max) {
+        max = result[key];
+        val = [key];
+      } else if (result[key] === max) {
+        val.push(key);
+      }
+    }
+    answer = [...answer, ...val];
+  }
+  console.log("reuslt:", result);
+  return answer.sort();
 }
 
 const getCombinations = function (arr, selectNumber) {
@@ -62,4 +75,4 @@ const getCombinations = function (arr, selectNumber) {
   return results; // 결과 담긴 results return
 };
 
-solution(orders, course);
+console.log(solution(orders, course));
