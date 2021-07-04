@@ -77,3 +77,32 @@ const indexHandler = (target) => {
   }
   return target;
 };
+
+/// 결국 성공
+function solution(n, a, b) {
+  if (n === 2 || (Math.min(a, b) % 2 === 1 && Math.abs(b - a) === 1)) return 1;
+  // Test25 => n = 8, a = 8,b=7  , Test26  => n = 16, a = 7,b=8이 성공하니 통과함
+  // a < b라는 보장이 없다는 걸 생각했어야
+  let indexA = a, // 1부터 시작
+    indexB = b,
+    round = 1;
+  let isEnd;
+  while (!isEnd) {
+    round++;
+    indexA = indexHandler(indexA);
+    indexB = indexHandler(indexB);
+    let minIndex = Math.min(indexA, indexB);
+
+    isEnd = minIndex % 2 === 1 && Math.abs(indexB - indexA) === 1;
+  }
+  return round;
+}
+
+const indexHandler = (target) => {
+  if (target % 2 === 0) {
+    target /= 2;
+  } else {
+    target = Math.floor(target / 2) + 1; // or Math.ceil(indexA/2)
+  }
+  return target;
+};
