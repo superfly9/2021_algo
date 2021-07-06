@@ -22,56 +22,44 @@
 
 // 입력: ["F-5 Freedom Fighter", "B-50 Superfortress", "A-10 Thunderbolt II", "F-14 Tomcat"]
 // 출력: ["A-10 Thunderbolt II", "B-50 Superfortress", "F-5 Freedom Fighter", "F-14 Tomcat"]
-
-// 1순위 - head의 알파벳 순서 , 2순위 - 숫자
-function solution(files) {
-  let result = {},
-    answer = [];
-  //1. head , number, tail로 일단 나누기(regex.test사용) => 이것에 대해 순회하며 순서를 정해여
-  for (let i = 0; i < files.length; i++) {
-    //head를 key로 해서 result 변형하기
-    // numberIndex  + numberLength = tail의 startIndex
-    let number = files[i].match(/\d+/)[0],
-      numberStart = files[i].indexOf(number),
-      head = files[i].substring(0, numberStart),
-      tail = files[i].substring(numberStart + number.length);
-    // console.log("number:", number, "numberStart", numberStart);
-    // console.log("head:", head, "tail:", tail);
-    //1. number - tail을 짝짓기 위해 일단 객체 key - value로 만들기
-    //2. 크기 순대로 출력 img :  { 12 : .png , 10 : .png , 02 : .png ...} => Object.keys.sort()로 key값 따라 sorting 후 다시 객체의 값 가져오기
-    let category = head.toLowerCase();
-    result[category] = {
-      ...result[category],
-      [number]: tail,
-    };
-  }
-  // 입력: ["img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"]
-  // 출력: ["img1.png", "IMG01.GIF", "img02.png", "img2.JPG", "img10.png", "img12.png"]
-  let keys = Object.keys(result).sort(); //img
-  console.log("keys:", keys, "result:", result);
-  for (let category of keys) {
-    // sorting한 것을 출력
-    // result[category] = { 5:freedom , 20 : awesome,14 : tomcat }
-    //  Number('020') === 20인데 얘네를 순서대로 어떻게 보여주냐? 그 전의 index기억하고 있어야 하나?
-    result[category];
-    console.log("key:", Object.keys(result[category]).sort());
-  }
-}
-
-let files = [
+const files = [
   "img12.png",
   "img10.png",
   "img02.png",
-  "img1.png",
-  "IMG01.GIF",
+  "F-5 Freedom Fighter",
+  "img01.png",
+  "IMG1.GIF",
   "img2.JPG",
 ];
 
-let files2 = [
-  "F-5 Freedom Fighter",
-  "B-50 Superfortress",
-  "A-10 Thunderbolt II",
-  "F-14 Tomcat",
-];
-solution(files);
-solution(files2);
+function solution(files) {
+  let result = [];
+  for (let i = 0; i < files.length; i++) {
+    let number = files[i].match(/\d+/)[0],
+      numberStart = files[i].indexOf(number),
+      head = files[i].substring(0, numberStart),
+      fileName = head.toLowerCase(),
+      file = files[i];
+    result.push({ number, fileName, file });
+  }
+  result.sort((a, b) => {
+    const { fileName: nameA, number: numberA } = a,
+      { fileName: nameB, number: numberB } = b;
+    if (nameA < nameB) {
+      return -1;
+    } else if (nameA > nameB) {
+      return 1;
+    }
+    if (Number(numberA) < Number(numberB)) {
+      return -1;
+    } else if (numberA > numberB) {
+      return 1;
+    } else {
+      console.log("a:", a, "b:", b);
+      return 0;
+    }
+  });
+  return result.reduce((acc, cur) => {
+    return [...acc, cur["file"]];
+  }, []);
+}
