@@ -66,3 +66,11 @@ console.log(nums);
 //     right: 11
 //   }
 // }
+
+// insertNode {
+//   root: treeNode {
+//     data: 10,
+//     left: treeNode { data: 5, left: [treeNode], right: [treeNode] },
+//     right: treeNode { data: 11, left: null, right: null }
+//   }
+// }
