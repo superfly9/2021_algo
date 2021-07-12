@@ -40,3 +40,37 @@ function solution(s) {
 }
 
 console.log(solution(str));
+
+//sol2) Set이용
+const solution = (s) => tupple(changeMatrix(getSets(s)));
+
+const getSets = (s) => {
+  const sets = s.match(/{[\d,]+}/g);
+  return sets
+    .map((set) => set.match(/[\d]+,?/g).map((v) => parseInt(v)))
+    .sort((a, b) => a.length - b.length);
+};
+
+const changeMatrix = (sets) => sets.reduce((_, set) => _.concat(set), []);
+
+const tupple = (arr) => [
+  ...arr.reduce((set, value) => set.add(value), new Set()),
+];
+
+//함수로 다 나눠서
+const tupleFrom = (str) =>
+  str
+    .slice(2, -2)
+    .split("},{")
+    .map((it) => toNumbers(it))
+    .sort(accendingByLength)
+    .reduce(
+      (acc, cur) => [...acc, ...cur.filter((it) => !acc.includes(it))],
+      []
+    );
+
+const toNumbers = (str) => str.split(",").map((it) => Number(it));
+
+const accendingByLength = (arr1, arr2) => arr1.length - arr2.length;
+
+const solution = (s) => tupleFrom(s);
